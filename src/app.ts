@@ -16,8 +16,8 @@ import {
   // ninthWeekAssignmentSecond,
   // tenthWeekAssignmentFirst,
   // tenthWeekAssignmentSecond,
-  twelvethWeekAssignmentFirst,
-  twelvethWeekAssignmentSecond,
+  twelfthWeekAssignmentFirst,
+  twelfthWeekAssignmentSecond,
 } from "./weeks";
 // import {SecondMax} from "./optional";
 
@@ -35,8 +35,8 @@ const main = async () => {
   // await ninthWeekAssignmentSecond.do();
   // await tenthWeekAssignmentFirst.do();
   // await tenthWeekAssignmentSecond.do();
-  await twelvethWeekAssignmentFirst.do();
-  await twelvethWeekAssignmentSecond.do();
+  await twelfthWeekAssignmentFirst.do();
+  await twelfthWeekAssignmentSecond.do();
 
   process.exit(0);
 };

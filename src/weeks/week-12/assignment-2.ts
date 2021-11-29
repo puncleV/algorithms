@@ -4,6 +4,38 @@ import * as path from "path";
 import { Assignment } from "../utils";
 import { KnapsackItem } from "./knapsack-item";
 
+const knapsack = (items: KnapsackItem[], n: number, w: number): number => {
+  const solved = new Map();
+
+  const solve = (items: KnapsackItem[], n: number, w: number): number => {
+    const key = `${n}:${w}`;
+
+    if (solved.has(key)) {
+      return solved.get(key);
+    }
+
+    if (n === 0 || w === 0) {
+      return 0;
+    }
+
+    if (w - items[n - 1].weight < 0) {
+      const result = solve(items, n - 1, w);
+
+      solved.set(key, result);
+
+      return result;
+    }
+
+    const result = Math.max(solve(items, n - 1, w - items[n - 1].weight) + items[n - 1].value, solve(items, n - 1, w));
+
+    solved.set(key, result);
+
+    return result;
+  };
+
+  return solve(items, n, w);
+};
+
 const assignmentFn = (input: Array<number[]>) => {
   const assignmentFile = fs.readFileSync(path.join(__dirname, "../../misc/assignment-12-big.txt"));
 
@@ -17,29 +49,7 @@ const assignmentFn = (input: Array<number[]>) => {
 
   const itemsToStore = elements.map((v) => new KnapsackItem(v[0], v[1]));
 
-  const [size, itemsCount] = knapsackSizes;
-  const a = new Array(itemsCount + 1).fill(null).map(() => new Array(size + 1));
-
-  for (let i = 0; i <= itemsCount; i += 1) {
-    for (let w = 0; w <= size; w += 1) {
-      if (i === 0 || w === 0) {
-        a[i][w] = 0;
-        continue;
-      }
-
-      const previousValue = a[i - 1][w];
-      const weightDifference = w - itemsToStore[i - 1].weight;
-
-      if (weightDifference < 0) {
-        a[i][w] = previousValue;
-        continue;
-      }
-
-      a[i][w] = Math.max(previousValue, a[i - 1][weightDifference] + itemsToStore[i - 1].value);
-    }
-  }
-
-  return a[itemsCount][size];
+  return knapsack(itemsToStore, knapsackSizes[1], knapsackSizes[0]);
 };
 
-export const twelvethWeekAssignmentSecond = new Assignment("KNAPSACK", assignmentFn);
+export const twelfthWeekAssignmentSecond = new Assignment("KNAPSACK", assignmentFn);

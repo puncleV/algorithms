@@ -42,4 +42,4 @@ const assignmentFn = (input: Array<number[]>) => {
   return a[itemsCount][size];
 };
 
-export const twelvethWeekAssignmentFirst = new Assignment("KNAPSACK", assignmentFn);
+export const twelfthWeekAssignmentFirst = new Assignment("KNAPSACK", assignmentFn);
